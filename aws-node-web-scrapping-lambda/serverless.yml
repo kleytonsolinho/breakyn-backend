@@ -1,0 +1,12 @@
+service: aws-node-web-scrapping-lambda
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+
+functions:
+  api:
+    handler: index.handler
+    url: true
+    timeout: 60

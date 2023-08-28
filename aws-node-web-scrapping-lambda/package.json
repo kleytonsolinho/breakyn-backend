@@ -1,0 +1,14 @@
+{
+  "name": "aws-node-web-scrapping-lambda",
+  "version": "1.0.0",
+  "description": "",
+  "dependencies": {
+    "@sparticuz/chromium": "^109.0.5",
+    "puppeteer": "^21.1.1",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
+  },
+  "devDependencies": {
+    "serverless-plugin-chrome": "^1.0.0-55.3"
+  }
+}
