@@ -9,4 +9,8 @@ functions:
   api:
     handler: index.handler
     url: true
-    timeout: 60
+    timeout: 30
+    memorySize: 768
+    # events:
+    #   - schedule: rate(1 hour)
+    #   - schedule: cron(0 12 * * ? *)

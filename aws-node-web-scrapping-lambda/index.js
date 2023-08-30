@@ -9,18 +9,20 @@ module.exports.handler = async (event, context) => {
     puppeteerExtra.use(stealthPlugin());
 
     const browser = await puppeteerExtra.launch({
-      args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
+      args: [...chromium.args, "--hide-scrollbars", "--disable-web-security", '--single-process', '--disable-gpu', '--use-gl=egl'],
       defaultViewport: chromium.defaultViewport,
       executablePath: await chromium.executablePath(),
       headless: 'new',
       ignoreHTTPSErrors: true,
     });
 
+    const page = await browser.newPage();
+
     await page.goto(URL, {
       waitUntil: "domcontentloaded",
     });
 
-    const bookData = await page.evaluate(() => {
+    const documentData = await page.evaluate(() => {
       const bookPods = Array.from(document.querySelectorAll('.product_pod'));
 
       const data = bookPods.map((book) => ({
@@ -32,19 +34,21 @@ module.exports.handler = async (event, context) => {
 
       return data
     });
+    
+    console.log(documentData)
 
-    console.log(bookData)
-
-    await browser.close();
+    await browser.close()
 
     return {
       statusCode: 200,
       body: JSON.stringify({
-        data: browser,
+        data: documentData,
         message: 'Success',
       }),
     };
  } catch(err) {
+    console.log('error', err)
+
     return {
       statusCode: 400,
       body: JSON.stringify({
